@@ -46,7 +46,7 @@ php bin/console doctrine:migrations:migrate
 `
 <br>
 
-Démarrez le serveur de développement Symfony :
+Démarrez le serveur de développement Symfony : <br>
 `bash
 php bin/console server:start
 `<br>

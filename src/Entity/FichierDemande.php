@@ -26,7 +26,9 @@ class FichierDemande
 
     #[ORM\ManyToOne(inversedBy: 'fichierDemandes')]
     private ?Fichier $id_fichier = null;
-    
+
+    #[ORM\ManyToOne(inversedBy: 'fichierDemandes')]
+    private ?InfoClient $id_client = null;
 
 
     public function getId(): ?int
@@ -69,9 +71,23 @@ class FichierDemande
         return $this;
     }
 
+    public function getIdClient(): ?InfoClient
+    {
+        return $this->id_client;
+    }
+
+    public function setIdClient(?InfoClient $id_client): self
+    {
+        $this->id_fichier = $id_client;
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return $this->getNomFichier() ?? '';
         }
+
+
 
 }
