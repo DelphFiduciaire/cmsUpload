@@ -45,22 +45,18 @@ class InfoClientController extends AbstractController
             return $this->redirectToRoute('app_info_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $utilisateurs = $userRepository->findBy(['roles' => 'ROLE_ADMIN']);
-
-        $listeNoms = [];
-        foreach ($utilisateurs as $utilisateur) {
-            $listeNoms[$utilisateur->getId()] = $utilisateur->getNom();
-        }
-        // dd($infoClient);
-        // dd($listeNoms);
-        // dd( $user->getUserIdentifier());
-        // dd($form);
+//        $utilisateurs = $userRepository->findBy(['roles' => 'ROLE_ADMIN']);
+//
+//        $listeNoms = [];
+//        foreach ($utilisateurs as $utilisateur) {
+//            $listeNoms[$utilisateur->getId()] = $utilisateur->getNom();
+//        }
 
         return $this->renderForm('info_client/new.html.twig', [
             'info_client' => $infoClient,
             'form' => $form,
             'user' => $user->getUserIdentifier(),
-            'listeNoms' => $listeNoms,
+//            'listeNoms' => $listeNoms,
         ]);
     }
 
@@ -117,16 +113,15 @@ class InfoClientController extends AbstractController
     {
 
         $user = $this->getUser();
-//        $count = $entityManager->getRepository(FichierDemande::class)->count_fichier($entityManager);
-//        dd($count);
+
         $clients = $entityManager->getRepository(InfoClient::class)->findBy([
             'id_user' =>$user,
         ]);
-//        dd($clients);
+
         return $this->render('info_client/index.html.twig', [
             'info_clients' => $clients,
             'user'=>$user->getUserIdentifier(),
-//            'count'=>$infoClientRepository->count($count)
+
         ]);
 
     }

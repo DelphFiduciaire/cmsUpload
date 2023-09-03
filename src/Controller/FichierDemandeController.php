@@ -54,36 +54,29 @@ class FichierDemandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('nom_fichier')->getData();
-              // Il s'agit de l'id du comptable 
+              // Il s'agit de l'id du client
             $idUser = $form->get('id_user')->getData()->getId();
             $idUser = $userrepo->find($idUser);
            
-            // dd($idUser);
                //Il s'agit de l'id du fichier demander pour tout les clients
             $idNomFichier= $form->get('id_fichier')->getData()->getId();
             $idNomFichier = $fichierrepo->find($idNomFichier);
 
             $nomOriginal = $form->get('nom_fichier')->getData()->getClientOriginalName();
-// le chemin ou le fichier est inserer
+
+            // le chemin ou le fichier est inserer
             $destinationDirectory = 'D:/XAMPP/htdocs/WEB/DELPH/cms_delph/public/'.'fichier';
-//             dd($destinationDirectory);
             $newFilename = $nomOriginal;
-            // dd($newFilename);
             $uploadedFile->move($destinationDirectory, $newFilename);
-//            dd($uploadedFile);
             $fichierDemande->setNomFichier($newFilename);
             $fichierDemande->setIdUser($idUser);
             $fichierDemande->setIdFichier($idNomFichier);
             $entityManager->persist($fichierDemande);
             $entityManager->flush();
-
-            // dd($fichierDemande);
-             $fichierDemandeRepository->save($fichierDemande, true);
+            $fichierDemandeRepository->save($fichierDemande, true);
 
             return $this->redirectToRoute('app_fichier_demande_index', [], Response::HTTP_SEE_OTHER);
         }
-
-
         return $this->renderForm('fichier_demande/new.html.twig', [
             'fichier_demande' => $fichierDemande,
             'form' => $form,
